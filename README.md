@@ -1,61 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JJK Subway Surfers</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-        canvas {
-            display: block;
-            background-color: #dcdcdc;
-            margin-bottom: 20px;
-        }
-        #startButton, #stopButton {
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        #stopButton {
-            background-color: #ff3333;
-        }
-        /* Hide the YouTube player */
-        #bgMusic {
-            width: 0;
-            height: 0;
-            position: absolute;
-            left: -9999px;
-        }
-    </style>
-</head>
-<body>
-
-<canvas id="gameCanvas" style="display:none;"></canvas>
-<button id="startButton">Start Game</button>
-<button id="stopButton" style="display:none;">Stop Game</button>
-
-<!-- Hidden YouTube Player -->
-<iframe 
-    id="bgMusic" 
-    src="https://www.youtube.com/embed/GNyTYl5Ddhk?autoplay=1&loop=1&playlist=GNyTYl5Ddhk" 
-    frameborder="0">
-</iframe>
-
 <script>
 // Set up basic game parameters
 const canvas = document.getElementById("gameCanvas");
@@ -178,7 +120,9 @@ function gameOver() {
     ctx.font = "30px Arial";
     ctx.fillText("Game Over", canvas.width / 2 - 80, canvas.height / 2);
     ctx.fillText("Final Score: " + score, canvas.width / 2 - 100, canvas.height / 2 + 40);
-    gameRunning = false; 
+    gameRunning = false;
+    document.getElementById("startButton").style.display = "block"; // Show start button
+    document.getElementById("stopButton").style.display = "none"; // Hide stop button
 }
 
 // Start the game
@@ -186,4 +130,22 @@ function startGame() {
     score = 0;
     obstacles = [];
     gameRunning = true;
-    ch
+    document.getElementById("gameCanvas").style.display = "block"; // Show the canvas
+    document.getElementById("startButton").style.display = "none"; // Hide start button
+    document.getElementById("stopButton").style.display = "block"; // Show stop button
+    draw(); // Begin the game loop
+}
+
+// Stop the game
+function stopGame() {
+    gameRunning = false;
+    document.getElementById("startButton").style.display = "block"; // Show start button
+    document.getElementById("stopButton").style.display = "none"; // Hide stop button
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+}
+
+// Button actions
+document.getElementById("startButton").addEventListener("click", startGame);
+document.getElementById("stopButton").addEventListener("click", stopGame);
+
+</script>
